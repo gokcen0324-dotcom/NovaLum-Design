@@ -1,0 +1,20 @@
+# Ortam değişkenleri ve gizli bilgiler
+.env
+
+# Sanal ortam
+venv/
+.venv/
+
+# Python önbellekleri
+__pycache__/
+*.py[cod]
+
+# SQLite veritabanı
+smartlead.db
+
+# VS Code
+.vscode/
+
+# Sistem dosyaları
+.DS_Store
+Thumbs.db
