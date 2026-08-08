@@ -1,3 +1,7 @@
+import config
+import json
+from urllib.request import Request, urlopen
+
 from flask import Blueprint, jsonify, render_template, request
 
 from app.database import lead_ekle, tum_leadler
@@ -99,11 +103,12 @@ def sohbet():
 
 @api.post("/leads")
 def create_lead():
-    """Yeni bir lead kaydeder."""
+    """Yeni bir lead kaydeder ve Google Sheets'e gönderir."""
 
     data = request.get_json(silent=True) or {}
 
     isim = data.get("isim", "").strip()
+    email = data.get("email", "").strip()
     telefon = data.get("telefon", "").strip()
     mesaj = data.get("mesaj", "").strip()
 
@@ -115,11 +120,44 @@ def create_lead():
         ), 400
 
     try:
+        # 1. Önce kendi veritabanımıza kaydet
         lead_ekle(
             isim,
             telefon,
             mesaj,
         )
+
+        # 2. Google Sheets'e gönder
+        sheets_url = config.GOOGLE_SHEETS_WEBHOOK_URL
+
+        if sheets_url:
+            sheets_data = json.dumps(
+                {
+                    "first_name": isim,
+                    "email": email,
+                    "edde": telefon,
+                    "long_answer": mesaj,
+                }
+            ).encode("utf-8")
+
+            sheets_request = Request(
+                sheets_url,
+                data=sheets_data,
+                headers={
+                    "Content-Type": "application/json"
+                },
+                method="POST",
+            )
+
+            sheets_response = urlopen(
+                sheets_request,
+                timeout=10,
+            )
+
+            print(
+                "Google Sheets cevabı:",
+                sheets_response.read().decode("utf-8")
+            )
 
         return jsonify(
             {
@@ -127,7 +165,9 @@ def create_lead():
             }
         ), 201
 
-    except Exception:
+    except Exception as error:
+        print("Lead kaydetme hatası:", error)
+
         return jsonify(
             {
                 "error": "Lead kaydedilirken bir hata oluştu."
