@@ -55,14 +55,12 @@ class AIService:
         )
 
         try:
-            response = self.client.chat.completions.create(
-                model="groq/compound",
-                messages=messages,
-                temperature=0.7,
-                max_tokens=500,
-            )
+    response = self.client.chat.completions.create(
+        model="groq/compound",
+        messages=messages
+    )
 
-            return response.choices[0].message.content
+    return response.choices[0].message.content
 
         except Exception as exc:
             raise AIServiceError(
