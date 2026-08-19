@@ -55,7 +55,7 @@ class AIService:
         )
         try:
             response = self.client.chat.completions.create(
-                model="groq/compound",
+                model="openai/gpt-oss-120b",
                 messages=messages
             )
 
