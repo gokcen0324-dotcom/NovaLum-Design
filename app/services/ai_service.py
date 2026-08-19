@@ -53,18 +53,18 @@ class AIService:
                 "content": mesaj,
             }
         )
-try:
-    response = self.client.chat.completions.create(
-        model="groq/compound",
-        messages=messages
-    )
+        try:
+            response = self.client.chat.completions.create(
+                model="groq/compound",
+                messages=messages
+            )
 
-    return response.choices[0].message.content
+            return response.choices[0].message.content
 
-except Exception as exc:
-    raise AIServiceError(
-        f"Yapay zekâ servisi kullanılırken hata oluştu: {exc}"
-    ) from exc
+        except Exception as exc:
+            raise AIServiceError(
+                f"Yapay zekâ servisi kullanılırken hata oluştu: {exc}"
+            ) from exc
 
 
 # Uygulamanın kullanacağı AI servis nesnesi
