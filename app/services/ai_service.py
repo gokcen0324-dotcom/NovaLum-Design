@@ -56,7 +56,7 @@ class AIService:
 
         try:
             response = self.client.chat.completions.create(
-                model="llama-3.1-8b-instant",
+                model="groq/compound",
                 messages=messages,
                 temperature=0.7,
                 max_tokens=500,
