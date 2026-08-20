@@ -12,7 +12,6 @@ from app.services.ai_service import AIServiceError, ai_service
 pages = Blueprint("pages", __name__)
 
 # API Blueprint'i
-# /api prefix'i __init__.py içinde verilecek.
 api = Blueprint("api", __name__)
 
 
@@ -120,9 +119,10 @@ def create_lead():
         ), 400
 
     try:
-        # 1. Önce kendi veritabanımıza kaydet
+        # 1. Kendi veritabanımıza kaydet
         lead_ekle(
             isim,
+            email,
             telefon,
             mesaj,
         )
