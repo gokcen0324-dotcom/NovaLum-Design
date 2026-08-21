@@ -60,7 +60,7 @@ def tum_leadler():
 
     return db.execute(
         """
-        SELECT id, isim, telefon, mesaj, tarih
+        SELECT id, isim, email, telefon, mesaj, tarih
         FROM leads
         ORDER BY tarih DESC
         """
