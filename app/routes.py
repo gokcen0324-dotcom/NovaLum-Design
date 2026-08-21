@@ -106,10 +106,10 @@ def create_lead():
 
     data = request.get_json(silent=True) or {}
 
-    isim = data.get("isim", "").strip()
-    email = data.get("email", "").strip()
-    telefon = data.get("telefon", "").strip()
-    mesaj = data.get("mesaj", "").strip()
+    isim = (data.get("isim") or "").strip()
+    email = (data.get("email") or "").strip()
+    telefon = (data.get("telefon") or "").strip()
+    mesaj = (data.get("mesaj") or "").strip()
 
     if not isim or not telefon:
         return jsonify(
