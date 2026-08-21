@@ -30,17 +30,21 @@ def init_db(app):
             )
             """
         )
+        try:
+            db.execute("ALTER TABLE leads ADD COLUMN email TEXT")
+        except sqlite3.OperationalError:
+            pass
 
         db.commit()
 
 
-def lead_ekle(isim, telefon, mesaj):
+def lead_ekle(isim, email, telefon, mesaj):
     """Yeni bir lead kaydeder."""
     db = get_db()
 
     db.execute(
         """
-        INSERT INTO leads (isim, telefon, mesaj)
+        INSERT INTO leads (isim, email, telefon, mesaj)
         VALUES (?, ?, ?)
         """,
         (isim, telefon, mesaj),
