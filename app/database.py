@@ -45,7 +45,7 @@ def lead_ekle(isim, email, telefon, mesaj):
     db.execute(
         """
         INSERT INTO leads (isim, email, telefon, mesaj)
-        VALUES (?, ?, ?)
+        VALUES (?, ?, ?, ?)
         """,
         (isim, telefon, mesaj),
     )
