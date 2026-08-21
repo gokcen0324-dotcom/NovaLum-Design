@@ -40,6 +40,7 @@ def init_db(app):
 
 def lead_ekle(isim, email, telefon, mesaj):
     """Yeni bir lead kaydeder."""
+
     db = get_db()
 
     db.execute(
@@ -47,7 +48,7 @@ def lead_ekle(isim, email, telefon, mesaj):
         INSERT INTO leads (isim, email, telefon, mesaj)
         VALUES (?, ?, ?, ?)
         """,
-        (isim, telefon, mesaj),
+        (isim, email, telefon, mesaj),
     )
 
     db.commit()
